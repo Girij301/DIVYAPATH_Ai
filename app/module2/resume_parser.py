@@ -8,23 +8,26 @@ except ImportError:
 
 def extract_text(uploaded_file):
     """
-    Accepts a Streamlit uploaded file (PDF or TXT)
+    Accepts a Flask uploaded file (PDF or TXT)
     Returns cleaned plain text of the resume
     """
     text = ""
 
-    # PDF handling
-    if uploaded_file.type == "application/pdf":
+    # Check file type
+    filename = uploaded_file.filename.lower()
+    if filename.endswith('.pdf'):
+        # PDF handling
         if pdfplumber is None:
             raise ImportError("pdfplumber is not installed. Install it to read PDFs.")
+        uploaded_file.seek(0)  # Reset file pointer
         with pdfplumber.open(uploaded_file) as pdf:
             for page in pdf.pages:
                 page_text = page.extract_text()
                 if page_text:
                     text += page_text + "\n"
-
-    # TXT handling
     else:
+        # TXT handling
+        uploaded_file.seek(0)  # Reset file pointer
         text = uploaded_file.read().decode("utf-8", errors="ignore")
 
     # Basic cleaning

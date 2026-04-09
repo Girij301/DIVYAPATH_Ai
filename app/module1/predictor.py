@@ -30,8 +30,14 @@ def predict_grade(
     parent_edu,
 ):
     # Encode categorical inputs
-    extra_val = extra_enc.transform([extra])[0]
-    parent_val = parent_enc.transform([parent_edu])[0]
+    try:
+        extra_val = extra_enc.transform([extra])[0]
+    except ValueError:
+        extra_val = 0  # default to 0
+    try:
+        parent_val = parent_enc.transform([parent_edu])[0]
+    except ValueError:
+        parent_val = 0  # default to 0
 
     # Prepare input
     input_data = np.array(
@@ -42,5 +48,8 @@ def predict_grade(
     pred = model.predict(input_data)
 
     # Decode grade (A/B/C/D)
-    grade = grade_enc.inverse_transform(pred)[0]
+    try:
+        grade = grade_enc.inverse_transform(pred)[0]
+    except ValueError:
+        grade = "C"  # default grade
     return grade

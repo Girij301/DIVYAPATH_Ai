@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Analyzer - DivyaPath AI{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-file-alt"></i> Resume Skill Analyzer</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="resume" class="form-label">Upload Resume (PDF or TXT)</label>
+                        <input class="form-control" type="file" id="resume" name="resume" accept=".pdf,.txt" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="target_role" class="form-label">Target Job Role</label>
+                        <select class="form-select" id="target_role" name="target_role" required>
+                            <option value="Data Scientist">Data Scientist</option>
+                            <option value="Data Analyst">Data Analyst</option>
+                            <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                            <option value="Web Developer">Web Developer</option>
+                            <option value="Frontend Developer">Frontend Developer</option>
+                            <option value="Backend Developer">Backend Developer</option>
+                            <option value="Software Engineer">Software Engineer</option>
+                            <option value="HR Manager">HR Manager</option>
+                            <option value="Business Analyst">Business Analyst</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search"></i> Analyze Resume
+                    </button>
+                </form>
+
+                {% if result %}
+                <hr>
+                <h4>Resume Score Card</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <h5>Match %</h5>
+                            <h2>{{ result.match_percent }}%</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <h5>Skills Found</h5>
+                            <h2>{{ result.matched_skills|length }}</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <h5>Skills Missing</h5>
+                            <h2>{{ result.missing_skills|length }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5>Matched Skills</h5>
+                        <ul class="list-group">
+                            {% for skill in result.matched_skills %}
+                            <li class="list-group-item list-group-item-success">{{ skill }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Top Missing Skills</h5>
+                        <ul class="list-group">
+                            {% for skill in result.missing_skills[:8] %}
+                            <li class="list-group-item list-group-item-danger">{{ skill }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <h5>What if you improve?</h5>
+                <p>If you learn the top missing skills and add 1–2 projects, your match score can grow from {{ result.match_percent }}% to around {{ [result.match_percent + 20, 95]|min }}%.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

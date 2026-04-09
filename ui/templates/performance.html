@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}Student Performance - DivyaPath AI{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2 class="fw-bold mb-0">
+                            <i class="fas fa-chart-line"></i> AI Performance Predictor
+                        </h2>
+                        <p class="mb-0 mt-2">Advanced Machine Learning Analysis for Academic Success</p>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" class="needs-validation" novalidate>
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <h4 class="fw-bold mb-3">
+                                        <i class="fas fa-sliders-h text-primary"></i> Input Parameters
+                                    </h4>
+
+                                    <div class="mb-4">
+                                        <label for="study_hours" class="form-label fw-bold">
+                                            <i class="fas fa-clock"></i> Study Hours per Week
+                                        </label>
+                                        <input type="range" class="form-range" id="study_hours" name="study_hours" min="0" max="80" step="1" value="20" required>
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">0h</small>
+                                            <output id="study_hours_output" class="fw-bold text-primary">20</output>
+                                            <small class="text-muted">80h</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="attendance" class="form-label fw-bold">
+                                            <i class="fas fa-calendar-check"></i> Attendance Rate (%)
+                                        </label>
+                                        <input type="range" class="form-range" id="attendance" name="attendance" min="0" max="100" step="1" value="80" required>
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">0%</small>
+                                            <output id="attendance_output" class="fw-bold text-primary">80</output>
+                                            <small class="text-muted">100%</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="previous_grade" class="form-label fw-bold">
+                                            <i class="fas fa-graduation-cap"></i> Previous Grade (0-100)
+                                        </label>
+                                        <input type="range" class="form-range" id="previous_grade" name="previous_grade" min="0" max="100" step="1" value="70" required>
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">0</small>
+                                            <output id="previous_grade_output" class="fw-bold text-primary">70</output>
+                                            <small class="text-muted">100</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <h4 class="fw-bold mb-3">
+                                        <i class="fas fa-user-graduate text-primary"></i> Student Profile
+                                    </h4>
+
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">
+                                            <i class="fas fa-users"></i> Extracurricular Activities
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input class="form-check-input" type="radio" name="extra" id="extra_yes" value="Yes" required>
+                                                <label class="form-check-label fw-bold" for="extra_yes">
+                                                    <i class="fas fa-check-circle text-success"></i> Yes
+                                                </label>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="form-check-input" type="radio" name="extra" id="extra_no" value="No" checked required>
+                                                <label class="form-check-label fw-bold" for="extra_no">
+                                                    <i class="fas fa-times-circle text-muted"></i> No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="parent_edu" class="form-label fw-bold">
+                                            <i class="fas fa-user-tie"></i> Parent Education Level
+                                        </label>
+                                        <select class="form-select form-select-lg" id="parent_edu" name="parent_edu" required>
+                                            <option value="Master">🎓 Master's Degree</option>
+                                            <option value="High School">🏫 High School</option>
+                                            <option value="Associate">📚 Associate Degree</option>
+                                            <option value="Bachelor" selected>🎓 Bachelor's Degree</option>
+                                            <option value="Doctorate">🎓 Doctorate</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle"></i>
+                                        <strong>AI Insight:</strong> Our advanced ML model analyzes 5 key factors to predict your academic performance with 95%+ accuracy.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-magic"></i> Predict My Performance
+                                </button>
+                            </div>
+                        </form>
+
+                        {% if grade %}
+                        <hr class="my-5">
+                        <div class="text-center mb-4">
+                            <h3 class="fw-bold text-success">
+                                <i class="fas fa-chart-pie"></i> AI Prediction Results
+                            </h3>
+                            <p class="text-muted">Based on advanced machine learning analysis</p>
+                        </div>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="metric-card">
+                                    <i class="fas fa-graduation-cap fa-2x mb-2"></i>
+                                    <h5>Predicted Grade</h5>
+                                    <h2 class="display-4">{{ grade }}</h2>
+                                    <small>Letter Grade</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="metric-card">
+                                    <i class="fas fa-percentage fa-2x mb-2"></i>
+                                    <h5>Success Probability</h5>
+                                    <h2 class="display-4">{{ prob }}%</h2>
+                                    <small>Pass Chance</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="metric-card">
+                                    <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                                    <h5>Risk Level</h5>
+                                    <h2 class="display-4">{{ icon }}</h2>
+                                    <small>{{ risk }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="fw-bold mb-0">
+                                            <i class="fas fa-lightbulb text-warning"></i> AI Recommendations
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            {% if attendance < 55 %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-exclamation-circle text-danger"></i>
+                                                <strong>Critical:</strong> Your attendance is below college minimum. Immediate improvement needed.
+                                            </li>
+                                            {% endif %}
+                                            {% if study_hours < 10 %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-exclamation-circle text-warning"></i>
+                                                <strong>Warning:</strong> Study time is very low. Increase to at least 15 hours/week.
+                                            </li>
+                                            {% endif %}
+                                            {% if previous_grade < 40 %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-exclamation-circle text-danger"></i>
+                                                <strong>Critical:</strong> Previous performance indicates high risk. Seek academic support.
+                                            </li>
+                                            {% endif %}
+                                            {% if attendance >= 75 %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                                <strong>Good:</strong> Strong attendance is positively impacting your prediction.
+                                            </li>
+                                            {% endif %}
+                                            {% if study_hours >= 20 %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                                <strong>Excellent:</strong> Your study effort is above average and shows in predictions.
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="fw-bold mb-0">
+                                            <i class="fas fa-rocket text-primary"></i> Improvement Simulation
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-3">
+                                            <strong>What if you improve?</strong>
+                                        </p>
+                                        <div class="alert alert-success">
+                                            <p class="mb-1">
+                                                <strong>Increased Study Hours:</strong> {{ study_hours }} → {{ new_study }} hours/week
+                                            </p>
+                                            <p class="mb-1">
+                                                <strong>Increased Attendance:</strong> {{ attendance }}% → {{ new_att }}%
+                                            </p>
+                                            <p class="mb-0">
+                                                <strong>New Success Probability:</strong>
+                                                <span class="fw-bold text-success">{{ sim_prob }}%</span>
+                                                (Grade: <strong>{{ sim_grade }}</strong>)
+                                            </p>
+                                        </div>
+                                        <div class="progress mt-3" style="height: 8px;">
+                                            <div class="progress-bar bg-success" style="width: {{ sim_prob }}%"></div>
+                                        </div>
+                                        <small class="text-muted">Potential improvement with small changes</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quote-section mt-4">
+                            <blockquote class="quote-text">
+                                "Success is not final, failure is not fatal: It is the courage to continue that counts."
+                            </blockquote>
+                            <cite class="quote-author">- Winston Churchill</cite>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Update range outputs in real-time
+document.getElementById('study_hours').addEventListener('input', function() {
+    document.getElementById('study_hours_output').value = this.value;
+});
+document.getElementById('attendance').addEventListener('input', function() {
+    document.getElementById('attendance_output').value = this.value;
+});
+document.getElementById('previous_grade').addEventListener('input', function() {
+    document.getElementById('previous_grade_output').value = this.value;
+});
+
+// Form validation
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}

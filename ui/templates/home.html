@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}Home - DivyaPath AI{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">🎓 DivyaPath AI</h1>
+        <p class="hero-subtitle">Your Intelligent Academic & Career Mentor</p>
+        <a href="{{ url_for('performance') }}" class="btn btn-primary btn-lg me-3">
+            <i class="fas fa-rocket"></i> Start Your Journey
+        </a>
+        <a href="#features" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-info-circle"></i> Learn More
+        </a>
+    </div>
+</div>
+
+<div class="quote-section">
+    <div class="container">
+        <blockquote class="quote-text">
+            "Education is not the learning of facts, but the training of the mind to think."
+        </blockquote>
+        <cite class="quote-author">- Albert Einstein</cite>
+    </div>
+</div>
+
+<section id="features" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Powerful AI-Powered Features</h2>
+        <p class="section-subtitle">Advanced tools designed to accelerate your academic and career success</p>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">AI Performance Prediction</h5>
+                        <p class="card-text">Machine learning algorithms analyze your study patterns to predict grades and success probabilities with high accuracy.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-primary">95% Accuracy</span>
+                            <span class="badge bg-success">Real-time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Smart Resume Analysis</h5>
+                        <p class="card-text">Advanced NLP and semantic matching technology evaluates your resume against job requirements with detailed insights.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-info">NLP Powered</span>
+                            <span class="badge bg-warning">Instant Results</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Personalized Roadmaps</h5>
+                        <p class="card-text">AI-generated career development plans combining your academic performance and job market analysis for optimal growth.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-success">Customized</span>
+                            <span class="badge bg-primary">3-12 Month Plans</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-smile-beam"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Emotion AI Music</h5>
+                        <p class="card-text">Computer vision and deep learning detect facial emotions and recommend personalized music playlists for better focus.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-danger">Computer Vision</span>
+                            <span class="badge bg-info">7 Emotions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="quote-section">
+    <div class="container">
+        <blockquote class="quote-text">
+            "The beautiful thing about learning is that no one can take it away from you."
+        </blockquote>
+        <cite class="quote-author">- B.B. King</cite>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-4">Why Choose DivyaPath AI?</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h5 class="fw-bold">Advanced AI Technology</h5>
+                        <p>State-of-the-art machine learning and deep learning models trained on extensive datasets.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h5 class="fw-bold">Real-time Analysis</h5>
+                        <p>Instant results with comprehensive insights and actionable recommendations.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h5 class="fw-bold">Personalized Experience</h5>
+                        <p>Tailored suggestions based on your unique profile and career goals.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h5 class="fw-bold">User-Friendly Interface</h5>
+                        <p>Intuitive design with professional UI/UX for seamless interaction.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h3 class="fw-bold mb-4">Success Statistics</h3>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="stats-counter">98%</div>
+                                <p class="text-muted">Prediction Accuracy</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="stats-counter">50K+</div>
+                                <p class="text-muted">Students Helped</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="stats-counter">500+</div>
+                                <p class="text-muted">Job Roles Analyzed</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="stats-counter">24/7</div>
+                                <p class="text-muted">AI Availability</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="quote-section">
+    <div class="container">
+        <blockquote class="quote-text">
+            "Success is not final, failure is not fatal: It is the courage to continue that counts."
+        </blockquote>
+        <cite class="quote-author">- Winston Churchill</cite>
+    </div>
+</div>
+{% endblock %}

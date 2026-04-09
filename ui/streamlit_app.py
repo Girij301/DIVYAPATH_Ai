@@ -5,32 +5,24 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
-
-import sys
-from pathlib import Path
-from app.module4.emotion_detector import detect_emotion
-from app.module4.song_recommender import recommend_songs
-from PIL import Image
-from app.module4.emotion_detector import detect_emotion
-from app.module4.song_recommender import recommend_songs
-from app.module4.emotion_detector import detect_emotion
-from PIL import Image
-
-# Add project root to Python path
-ROOT_DIR = Path(__file__).resolve().parents[1]
-sys.path.append(str(ROOT_DIR))
-
 import streamlit as st
 from app.module1.predictor import load_model, predict_grade
 from app.module1.risk_engine import apply_college_rules, grade_to_probability, risk_level
 from app.module2.resume_parser import extract_text
 from app.module2.skill_matcher import analyze_resume
 from app.module3.roadmap_generator import generate_roadmap
-#from app.module4.emotion_detector import detect_emotion
-#from app.module4.song_recommender import recommend_songs
-#from PIL import Image
-#import cv2
+from app.module4.song_recommender import recommend_songs
+from PIL import Image
 import numpy as np
+
+try:
+    from app.module4.emotion_detector import detect_emotion
+    emotion_detection_available = True
+    emotion_error = None
+except Exception as e:
+    detect_emotion = None
+    emotion_detection_available = False
+    emotion_error = str(e)
    
     
 st.set_page_config(
@@ -49,9 +41,17 @@ st.markdown('<div style="text-align:center;font-size:2.6rem;font-weight:bold;">�
 st.markdown('<div style="text-align:center;color:#666;">Your Academic & Career Mentor</div>', unsafe_allow_html=True)
 st.markdown("---")
 
-tab1, tab2, tab3, tab4= st.tabs(
-    ["🎓 Student Performance", "📄 Resume Skill Analyzer", "🛣️ Career Roadmap","🎧 Mood Based Song"]
-)
+# Create tabs based on available features
+if emotion_detection_available:
+    tab1, tab2, tab3, tab4 = st.tabs(
+        ["🎓 Student Performance", "📄 Resume Skill Analyzer", "🛣️ Career Roadmap", "🎧 Mood Based Song"]
+    )
+else:
+    tab1, tab2, tab3 = st.tabs(
+        ["🎓 Student Performance", "📄 Resume Skill Analyzer", "🛣️ Career Roadmap"]
+    )
+    tab4 = None
+    st.info("💡 Mood detection feature is unavailable on this machine. You can use Student Performance, Resume Analyzer, and Roadmap features.")
 
 
 # =========================
@@ -253,30 +253,33 @@ with tab3:
 # =========================
 # Module 4 – Mood & Music
 
-with tab4:
-    st.markdown("### 🎧 Mood Detection & Song Recommendation")
+if tab4 is not None:
+    with tab4:
+        st.markdown("### 🎧 Mood Detection & Song Recommendation")
 
-    uploaded_img = st.file_uploader(
-        "Upload your face image",
-        type=["jpg", "png", "jpeg"],
-        key="mood_image"
-    )
+        uploaded_img = st.file_uploader(
+            "Upload your face image",
+            type=["jpg", "png", "jpeg"],
+            key="mood_image"
+        )
 
-    if uploaded_img:
-        st.image(uploaded_img, width=250)
+        if uploaded_img:
+            st.image(uploaded_img, width=250)
 
-        if st.button("🎯 Detect Emotion & Recommend Songs"):
-            img_bytes = uploaded_img.read()
-            emotion, confidence = detect_emotion(img_bytes)
+            if st.button("🎯 Detect Emotion & Recommend Songs"):
+                img_bytes = uploaded_img.read()
+                try:
+                    emotion, confidence = detect_emotion(img_bytes)
+                    st.success(f"Detected Emotion: {emotion}")
+                    st.write(f"Confidence: {round(confidence * 100, 2)}%")
 
-            st.success(f"Detected Emotion: {emotion}")
-            st.write(f"Confidence: {round(confidence * 100, 2)}%")
+                    songs = recommend_songs(emotion)
 
-            songs = recommend_songs(emotion)
-
-            st.markdown("### 🎵 Songs for You")
-            if songs:
-                for s in songs:
-                    st.write(f"🎶 {s['song']} – {s['artist']} ({s['language']})")
-            else:
-                st.info("No songs found for this mood.")
+                    st.markdown("### 🎵 Songs for You")
+                    if songs:
+                        for s in songs:
+                            st.write(f"🎶 {s['song']} – {s['artist']} ({s['language']})")
+                    else:
+                        st.info("No songs found for this mood.")
+                except Exception as e:
+                    st.error(f"Emotion detection failed: {str(e)}")

@@ -4,8 +4,9 @@ import joblib
 from pathlib import Path
 from sklearn.metrics.pairwise import cosine_similarity
 
-DATA_DIR = Path("C:/Users/yshel/Desktop/DivyaPath-Ai/data/module2_resume")
-MODEL_DIR = Path("C:/Users/yshel/Desktop/DivyaPath-Ai/models")
+BASE_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = BASE_DIR / "data" / "module2_resume"
+MODEL_DIR = BASE_DIR / "models"
 
 SKILL_PATH = DATA_DIR / "skills_master.csv"
 JOB_PATH = DATA_DIR / "all_job_post.csv"

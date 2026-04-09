@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Mood Detection - DivyaPath AI{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2 class="fw-bold mb-0">
+                            <i class="fas fa-smile-beam"></i> AI Emotion Intelligence
+                        </h2>
+                        <p class="mb-0 mt-2">Computer Vision Mood Analysis & Music Therapy</p>
+                    </div>
+                    <div class="card-body">
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            <strong>Emotion detection unavailable:</strong> {{ error }}
+                            <br />
+                            Please use a machine with AVX/AVX2 support or remove TensorFlow-dependent features.
+                        </div>
+                        {% endif %}
+                        <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <h4 class="fw-bold mb-3">
+                                        <i class="fas fa-camera text-danger"></i> Facial Analysis
+                                    </h4>
+
+                                    <div class="mb-4">
+                                        <label for="image" class="form-label fw-bold">
+                                            <i class="fas fa-image"></i> Upload Face Image
+                                        </label>
+                                        <input class="form-control form-control-lg" type="file" id="image" name="image" accept="image/*" required>
+                                        <div class="form-text">
+                                            <i class="fas fa-info-circle"></i> Clear frontal face image for best results. Supports JPG, PNG formats.
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-warning">
+                                        <i class="fas fa-eye"></i>
+                                        <strong>Privacy First:</strong> Images are processed locally and not stored. Your emotions stay private.
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="fw-bold">
+                                                <i class="fas fa-brain"></i> AI Technology
+                                            </h6>
+                                            <ul class="list-unstyled mb-0 small">
+                                                <li><i class="fas fa-check text-success"></i> Deep Learning CNN Model</li>
+                                                <li><i class="fas fa-check text-success"></i> 7 Emotion Recognition</li>
+                                                <li><i class="fas fa-check text-success"></i> Real-time Processing</li>
+                                                <li><i class="fas fa-check text-success"></i> Personalized Recommendations</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <h4 class="fw-bold mb-3">
+                                        <i class="fas fa-music text-danger"></i> Music Therapy
+                                    </h4>
+
+                                    <div class="mb-4">
+                                        <div class="card bg-gradient">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-headphones fa-3x text-white mb-3"></i>
+                                                <h5 class="text-white fw-bold">Emotion-Based Playlists</h5>
+                                                <p class="text-white-50 mb-0">Get songs that match your current mood for better focus and well-being.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <i class="fas fa-laugh-beam fa-2x text-warning mb-2"></i>
+                                                <p class="fw-bold small">Happy</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <i class="fas fa-sad-tear fa-2x text-primary mb-2"></i>
+                                                <p class="fw-bold small">Sad</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <i class="fas fa-angry fa-2x text-danger mb-2"></i>
+                                                <p class="fw-bold small">Angry</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <i class="fas fa-surprise fa-2x text-info mb-2"></i>
+                                                <p class="fw-bold small">Surprised</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-danger btn-lg px-5">
+                                    <i class="fas fa-magic"></i> Analyze My Mood
+                                </button>
+                            </div>
+                        </form>
+
+                        {% if emotion %}
+                        <hr class="my-5">
+                        <div class="text-center mb-4">
+                            <h3 class="fw-bold text-danger">
+                                <i class="fas fa-brain"></i> AI Emotion Analysis
+                            </h3>
+                            <p class="text-muted">Advanced computer vision results</p>
+                        </div>
+
+                        <div class="emotion-result">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h4 class="mb-3">
+                                        <i class="fas fa-smile"></i> Detected Emotion
+                                    </h4>
+                                    <h1 class="display-1 fw-bold text-white">{{ emotion|title }}</h1>
+                                    <div class="progress mt-3" style="height: 10px;">
+                                        <div class="progress-bar bg-white" style="width: {{ confidence }}%"></div>
+                                    </div>
+                                    <p class="mt-2 mb-0 text-white-50">Confidence: {{ confidence }}%</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        {% if emotion == 'happy' %}
+                                        <i class="fas fa-laugh-beam fa-5x text-warning"></i>
+                                        {% elif emotion == 'sad' %}
+                                        <i class="fas fa-sad-tear fa-5x text-primary"></i>
+                                        {% elif emotion == 'angry' %}
+                                        <i class="fas fa-angry fa-5x text-danger"></i>
+                                        {% elif emotion == 'surprise' %}
+                                        <i class="fas fa-surprise fa-5x text-info"></i>
+                                        {% elif emotion == 'neutral' %}
+                                        <i class="fas fa-meh fa-5x text-secondary"></i>
+                                        {% elif emotion == 'fear' %}
+                                        <i class="fas fa-frown fa-5x text-dark"></i>
+                                        {% elif emotion == 'disgust' %}
+                                        <i class="fas fa-tired fa-5x text-muted"></i>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <h4 class="fw-bold text-center mb-4">
+                                <i class="fas fa-music"></i> Curated Playlist for Your Mood
+                            </h4>
+
+                            {% if songs %}
+                            <div class="row g-4">
+                                {% for song in songs %}
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="song-card">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-music fa-2x text-primary me-3"></i>
+                                            <div>
+                                                <h6 class="fw-bold mb-1">{{ song.song }}</h6>
+                                                <p class="text-muted mb-1">{{ song.artist }}</p>
+                                                <small class="badge bg-secondary">{{ song.language }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="alert alert-success mt-4">
+                                <i class="fas fa-heart"></i>
+                                <strong>Music Therapy:</strong> These songs are scientifically selected to improve your mood and productivity. Listen and feel the difference!
+                            </div>
+                            {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-music fa-3x text-muted mb-3"></i>
+                                <h5 class="text-muted">No Songs Available</h5>
+                                <p class="text-muted">We're working on expanding our music database for this emotion.</p>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="quote-section mt-4">
+                            <blockquote class="quote-text">
+                                "Music can change the world because it can change people."
+                            </blockquote>
+                            <cite class="quote-author">- Bono</cite>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Image preview
+document.getElementById('image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        // Basic validation
+        const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!validTypes.includes(file.type)) {
+            alert('Please select a valid image file (JPG, PNG)');
+            this.value = '';
+            return;
+        }
+
+        const maxSize = 10 * 1024 * 1024; // 10MB
+        if (file.size > maxSize) {
+            alert('File size must be less than 10MB');
+            this.value = '';
+            return;
+        }
+
+        console.log(`Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
+    }
+});
+
+// Form validation
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}

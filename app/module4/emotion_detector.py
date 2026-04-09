@@ -1,16 +1,30 @@
 import numpy as np
 import cv2
-import tensorflow as tf
 from pathlib import Path
 
-# Path to trained model
 MODEL_PATH = Path(__file__).resolve().parents[2] / "models" / "emotion_model.h5"
-
-# Load model
-model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-
-# Same order as training folders
 EMOTIONS = ["angry", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
+
+_model = None
+_tf = None
+
+
+def _load_model():
+    global _model, _tf
+    if _model is not None:
+        return _model
+
+    try:
+        import tensorflow as tf
+    except ImportError as ex:
+        raise ImportError(
+            "TensorFlow is required for emotion detection. "
+            "Install a compatible TensorFlow build or run on a machine with AVX/AVX2 support."
+        ) from ex
+
+    _tf = tf
+    _model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+    return _model
 
 
 def preprocess_image(image_bytes):
@@ -44,6 +58,7 @@ def detect_emotion(image_bytes):
     """
     Returns: (emotion, confidence)
     """
+    model = _load_model()
     processed = preprocess_image(image_bytes)
 
     preds = model.predict(processed, verbose=0)

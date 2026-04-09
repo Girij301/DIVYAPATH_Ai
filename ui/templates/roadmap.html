@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Career Roadmap - DivyaPath AI{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2 class="fw-bold mb-0">
+                            <i class="fas fa-route"></i> AI Career Roadmap
+                        </h2>
+                        <p class="mb-0 mt-2">Personalized Development Plan for Success</p>
+                    </div>
+                    <div class="card-body">
+                        {% if roadmap %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-brain"></i>
+                            <strong>AI-Generated Plan:</strong> Based on your resume analysis and academic performance.
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="fw-bold mb-0">
+                                            <i class="fas fa-clock"></i> 3-Month Plan
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="timeline">
+                                            {% for step in roadmap['3_month'] %}
+                                            <div class="timeline-item">
+                                                <p class="mb-0">{{ step }}</p>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="fw-bold mb-0">
+                                            <i class="fas fa-calendar-alt"></i> 6-Month Plan
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="timeline">
+                                            {% for step in roadmap['6_month'] %}
+                                            <div class="timeline-item">
+                                                <p class="mb-0">{{ step }}</p>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="fw-bold mb-0">
+                                            <i class="fas fa-trophy"></i> 12-Month Plan
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="timeline">
+                                            {% for step in roadmap['12_month'] %}
+                                            <div class="timeline-item">
+                                                <p class="mb-0">{{ step }}</p>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h5 class="fw-bold mb-0">
+                                    <i class="fas fa-lightbulb"></i> Success Tips
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold text-primary">
+                                            <i class="fas fa-check-circle"></i> Do's
+                                        </h6>
+                                        <ul>
+                                            <li>Set specific, measurable goals</li>
+                                            <li>Track your progress weekly</li>
+                                            <li>Network with professionals</li>
+                                            <li>Build a strong portfolio</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold text-danger">
+                                            <i class="fas fa-times-circle"></i> Don'ts
+                                        </h6>
+                                        <ul>
+                                            <li>Don't skip foundational skills</li>
+                                            <li>Avoid procrastination</li>
+                                            <li>Don't work in isolation</li>
+                                            <li>Avoid outdated learning methods</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-file-alt fa-4x text-muted mb-3"></i>
+                            <h4 class="text-muted">No Roadmap Available</h4>
+                            <p class="text-muted">Please analyze your resume first to generate a personalized career roadmap.</p>
+                            <a href="{{ url_for('resume') }}" class="btn btn-primary">
+                                <i class="fas fa-arrow-left"></i> Go to Resume Analyzer
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
