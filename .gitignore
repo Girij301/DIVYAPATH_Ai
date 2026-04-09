@@ -1,35 +1,20 @@
-# Virtual Environments
 .venv/
 venv/
-
-# Python Cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
-
-# IDE
 .vscode/
 .idea/
-
-# Environment Variables
 .env
 .env.local
-
-# Old Model Files (keep v2 versions only)
 models/extra_encoder.pkl
 models/grade_encoder.pkl
 models/parent_encoder.pkl
 models/student_model.pkl
 models/emotion_model.h5
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Jupyter
 .ipynb_checkpoints/
 
-# Large Data (optional - uncomment if needed)
-# data/module4_emotion/fer-2013/
