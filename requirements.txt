@@ -13,5 +13,5 @@ pdfminer.six
 joblib
 altair
 flask
-gunicorn
+gunicorn==21.2.0
 python-dotenv
