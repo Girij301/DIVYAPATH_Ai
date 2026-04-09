@@ -13,6 +13,10 @@ from app.module2.skill_matcher import analyze_resume
 from app.module3.roadmap_generator import generate_roadmap
 from app.module4.song_recommender import recommend_songs
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 try:
     from app.module4.emotion_detector import detect_emotion
@@ -22,7 +26,7 @@ except Exception as e:
     emotion_error = str(e)
 
 app = Flask(__name__)
-app.secret_key = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6'
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'dev-key-change-in-production')
 
 # Load model once
 model, grade_enc, extra_enc, parent_enc = load_model()
